@@ -1,0 +1,126 @@
+= Abstract
+
+== Problèmes constatés / Pourquoi ce talk
+
+* J'ai vu beaucoup de tech talks parler de comment coder un composant avec le fwk X ou Y mais le plus souvent, le talk se concentre sur comment utiliser le framework et pas forcément sur la méthodo pour penser le composant au niveau fonctionnel (et technique). Quelles sont les étapes de conception, de réalisation, de documentation, de review, de test...
+* Au fur et à mesure de nos développements de composants Web chez Clever, nous avons mis en place une "méthode" et des checklists pour concevoir et créer un composant. Nous nous servons beaucoup de storybook pour ça.
+
+== Conclusion
+
+...
+
+== Take away
+
+Une personne qui a suivi la présentation repart avec :
+
+* Je sais que Storybook peut m'aider en tant que dev, même si je ne bosse pas sur une librairie de composants réutilisables.
+** Pendant la conception, ça me pousse à penser à tous les cas possibles en créant les différentes stories (loading/skeleton, different states, data loading, empty, loading error, saving error, loading simulation...)
+** Pendant la réalisation, ça me fournit une boucle de feedback courte (live preview) de tous ces cas de figure, je peux facilement changer des paramètres et détecter certains problèmes très rapidement.
+** Pendant la review, ça me permet de facilement publier une branche de travail pour avoir les feedbacks de mes collègues, je peux même écrire des stories avec plusieurs variantes d'un composant uniquement pour la review.
+** Pour la documentation, le fait de travailler avec cet outil pendant toutes les étapes en amont me pousse à écrire la doc le plus tôt possible car je vois directement ce que les utilisateurs verront.
+* Je retiens des conseils et checklists de choses à penser quand je créé un composant UI que je peux appliquer même sans Storybook (et même si je ne fais pas de Web Components).
+
+== Déroulé simplifié
+
+Live coding d'un vrai composant de prod avec storybook mettant en avant la démarche de conception, de développement, de review, de docs, de test.
+
+* Conception top to bottom en wireframe sur papier
+** Quelles sont les données à afficher ? => on les positionne
+** Quelles sont les actions utilisateur ? => validation ?
+** Quelles sont les erreurs possibles ? => on réfléchis à ce qu'il faut faire en cas d'erreur
+** On dessine le composant en partant du conteneur jusqu'au plus petit détail
+** Au fur et à mesure qu'on descend, on réfléchi à "est-ce que c'est nécessaire de créer un sous composant ?"
+
+* On passe ensuite à l'écriture des stories pour Storybook
+** À partir de l'étape d'avant, on définit l'API du composant
+*** Attributs/proriétés (avec typedef)
+**** Comment ces données dépendantes
+*** events (avec typedef)
+*** slots
+*** CSS custom properties (avec typedef)
+*** methods (avec typedef)
+*** i18n keys
+** En fonction de l'API, on va pouvoir
+*** lister les cas possibles (loading/skeleton, different states, data loading, empty, loading error, saving error, loading simulation...)
+**** on test avec des données foireuses
+*** préparer des variantes en fonction des inputs (attr,prop,slot) : préparer des données de test
+*** préparer des variantes en des CSS custom props
+*** écouter les événements
+
+* On commence l'implem du composant
+** La boucle de feedback avec Storybook est vraiment top
+** On trie ces membres dans le composant
+** On oublie pas le i18n
+** On oublie pas la doc
+** On oublie pas les states hover/active/focus...
+** On oublie pas l'usage clavier et touch
+** On oublie pas le responsive
+** On oublie pas le a11y
+
+* On publie une preview branch pour review
+** On ajoute des stories pour tester des variantes si besoin (couleur, design, behaviour)
+** On récolte du feedback (collègues, partenaires...)
+** On peut aussi directement faire un ngrok
+
+* On commence l'intégration dans l'application cible
+* On release et on publish le module npm
+* On release et on publish l'application qui utilise le composant
+
+== Abstract
+
+=== FR
+
+Storybook est un outil pour présenter et documenter des librairies de composants Web UI (Angular, React, Vue, Web Components...) mais son usage ne se limite pas qu'à cette phase post-développement, bien au contraire.
+C'est aussi et surtout un formidable outil pour les devs, y compris pour celles et ceux qui travaillent sur des composants qui ne sont utilisés que par une seule application.
+
+Durant cette session, je vous propose de recoder ensemble un vrai composant de prod ;-)
+En s'inspirant de TDD, nous verrons comment Storybook nous aide à "driver" les différentes étapes de création : conception, développement, revue, documentation...
+
+=== EN
+
+Storybook's primary goal is to document and demo Web UI component librairies (Angular, React, Vue, Web Components...) but its usage is not limited to this post-dev phase, on the contrary.
+It's also a really powerful tool for developers, including those working on components only used in one app.
+
+In this session, we'll recreate together a real production component ;-)
+Inpired by TDD, we'll see how Storybook helps us to "drive" the different creation steps : design, code, review, documentation...
+
+== Message pour le comité
+
+=== FR
+
+L'idée de ce talk est de montrer comment j'utilise Storybook et de partager différents conseils et rappels à ne pas oublier pendant la création d'un composant Web UI qui sont nourris de mon expérience.
+Je vais live-coder un vrai composant en prod issue de la console d'admin de Clever Cloud développé avec LitElement.
+L'idée n'est pas d'insister sur comment fonctionne LitElement, bien au contraire.
+La démarche et mes conseils s'appliquent à tous les autres frameworks.
+Il y aura plusieurs moments de copier/coller de code pour gagner du temps car c'est bien la mise en situation et la réflexion à voix haute qui est intéressante, plus que les lignes de code parfois spécifiques à LitElement ou au CSS.
+
+Une personne qui a suivi la présentation repart avec :
+
+* Je sais que Storybook peut m'aider en tant que dev, même si je ne bosse pas sur une librairie de composants réutilisables.
+** Pendant la conception, ça me pousse à penser à tous les cas possibles en créant les différentes stories (loading/skeleton, different states, data loading, empty, loading error, saving error, loading simulation...)
+** Pendant la réalisation, ça me fournit une boucle de feedback courte (live preview) de tous ces cas de figure, je peux facilement changer des paramètres et détecter certains problèmes très rapidement.
+** Pendant la review, ça me permet de facilement publier une branche de travail pour avoir les feedbacks de mes collègues, je peux même écrire des stories avec plusieurs variantes d'un composant uniquement pour la review.
+** Pour la documentation, le fait de travailler avec cet outil pendant toutes les étapes en amont me pousse à écrire la doc le plus tôt possible car je vois directement ce que les utilisateurs verront.
+* Je retiens des conseils et checklists de choses à penser quand je créé un composant UI que je peux appliquer même sans Storybook (et même si je ne fais pas de Web Components).
+
+=== EN
+
+In this talk, I want to show how I use Storybook and share differents tips and stuffs to remember when you create a Web UI component.
+I'm going to live-code a real production component from the admin console of Clever Cloud using LitElement.
+This idea is not to insist on how LitElement works, on the contrary.
+The method and most of my tips apply to all other trendy frontend frameworks.
+
+The audience will take away:
+
+* I know Storybook can help me as a dev, event if I don't work on a librairy of reusable components.
+** During design phase: it pushes me to think about all possible cases by creating the stories (loading/skeleton, different states, data loading, empty, loading error, saving error, loading simulation...)
+** During dev phase: it gives me a short feedback loop (with live preview) of all those possible cases, I can easily change some parameters and detect some problems earlier.
+** During review phase: it helps me to publish a working branch to get feedbacks from colleagues, I can even write stories only for the review to test some variants.
+** For the documentation: going through all those steps with the very tool/page my users will use to get the documentation helps me to write some.
+* I learned some tips and stuffs to remember when I work on a Web UI component that I can use even if I don't use Storybook.
+
+== Idées de titre
+
+Storybook Driven Development : concevez, développez, reviewer et documentez vos composants UI avec brio
+
+Storybook Driven Development : design, code, review and document your UI components with style
